@@ -1,46 +1,41 @@
-import { models, model, Schema, Document } from "mongoose";
+import { Schema, model, models } from "mongoose";
 
-export interface IUser extends Document {
-    clerkId, email, username, photo, firstname, lastname, planid, creditbalance
+const UserSchema = new Schema({
+  clerkId: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  username: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  photo: {
+    type: String,
+    required: true,
+  },
+  firstName: {
+    type: String,
+  },
+  lastName: {
+    type: String,
+  },
+  planId: {
+    type: Number,
+    default: 1,
+  },
+  creditBalance: {
+    type: Number,
+    default: 10,
+  },
+});
 
-    title: string;
-    transformation: string;
-    publicId: string;
-    secureUrl: string; // Using string instead of URL
-    width?: number;
-    height?: number;
-    config?: object;
-    transformationUrl?: string; // Using string instead of URL
-    aspectRatio?: number;
-    color?: string;
-    prompt?: string;
-    author: {
-        _id: string;
-        firstName: string;
-        lastName: string;
-        // Schema.Types.ObjectId;
-    }
-    createdAt: Date;
-    updatedAt: Date;
-}
+const User = models?.User || model("User", UserSchema);
 
-const ImageSchema = new Schema({
-    title: { type: String, required: true },
-    transformation: { type: String, required: true },
-    publicId: { type: String, required: true },
-    secureUrl: { type: URL, required: true }, 
-    width: {type: Number},
-    height: {type: Number},
-    config: {type: Object},
-    transformationUrl: { type: URL },
-    aspectRatio: { type: Number },
-    color: {type: String},
-    prompt: {type: String},
-    author: {type: Schema.Types.ObjectId, ref: 'User'},
-    createdAt: { type: Date, default: Date.now },
-    updatedAt: { type: Date, default: Date.now }
-})
-
-const Image = models?.Image || model('Image', ImageSchema);
-
-export default Image
+export default User;
