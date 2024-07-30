@@ -1,0 +1,12 @@
+7/30
+Wanted to solidify my understanding of how Clerk auth works with the database. 
+
+Clerk has a webhook which sends events (and data) to the api/webhooks/clerk route.
+
+Depending on the event type (create, update, or delete), the route calls the appropriate server action, defined in @lib/actions/user.actions.ts. 
+
+In the case of createUser, the webhook event.data is stored in a user object and passed to the mongoose User model's create() method, which returns a promise for the created mongodb document. if it errors out, the user is not new. If it is successful, the returned document has the mongodb unique _id we need to store in the clerk publicMetadata field so that the mongo record can also be deleted if the user deletes their account in clerk. 
+
+@lib/db/mongoose.ts sets up the connection. 
+@lib/db/models/user.model.ts sets up the user Schema and creates the model if it doesn't already exist. User is the exported model which is how you interact with the db.
+
