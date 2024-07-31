@@ -5,12 +5,14 @@ import { revalidatePath } from "next/cache";
 import User from "../database/models/user.model";
 import { connectToDatabase } from "../database/mongoose";
 import { handleError } from "../utils";
+import chalk from "chalk";
 
 // CREATE
 export async function createUser(user: CreateUserParams) {
   try {
+    
     await connectToDatabase();
-
+    
     const newUser = await User.create(user);
 
     return JSON.parse(JSON.stringify(newUser));
@@ -22,9 +24,12 @@ export async function createUser(user: CreateUserParams) {
 // READ
 export async function getUserById(userId: string) {
   try {
+    console.log(chalk.bgRedBright("connectToDatabase"));
     await connectToDatabase();
-
+    console.log(chalk.bgRedBright("call findOne"));
     const user = await User.findOne({ clerkId: userId });
+    console.log(chalk.bgRedBright(" after call to findOne"));
+    console.log(`here's the result: ${user}`);
 
     if (!user) throw new Error("User not found");
 
