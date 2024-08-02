@@ -4,7 +4,6 @@ import MobileNav from "@/components/shared/MobileNav";
 import chalk from "chalk";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
-  console.log(chalk.redBright("MAIN LAYOUT"));
   return (
     <main className="root">
       <Sidebar />
